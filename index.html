@@ -4,17 +4,10 @@
   <title>TimeBomb</title>
 </head>
 <body>
-  <div id="">
-    <input id="project-name" type="text" name="project" placeholder="project name"/>
-    <input id="add-project" type="button" name="add-project" value="Add New Project"/>
-    <ol class="project-list">
-    </ol>
+  <div id="app-wrapper">
   </div>
 
   <script id="tpl-project-list" type="text/x-handlebars-template">
-    {{#each projects}}
-    <li>{{name}}</li>
-    {{/each}}
   </script>
 
   <script type="text/javascript" charset="utf-8">
@@ -22,29 +15,67 @@
     var Uuid = require('node-uuid');
     var Datastore = require('nedb');
     var Handlebars = require('handlebars');
+    var Moment = require('moment');
+    var Utils = require('./utils.js');
 
     var projectDB = new Datastore({ filename: __dirname + '/db/project.db', autoload: true});
+    window.views = 'home';
+    window.counter = 0;
+    window.timer = null;
 
-    $('#add-project').on('click', function() {
-      var project = {};
-      project.created_date = new Date
-      project.name = $('#project-name').val();
-      projectDB.insert(project, function()  {
-        populateProjectList();
-      });
+    /*on page ready*/
+    $(document).ready(function()  {
+      populateProjectList();
     });
 
-$(document).ready(function()  {
-  populateProjectList();
-});
-
 function populateProjectList()  {
-  var projectListTemplate = Handlebars.compile($('#tpl-project-list').html());
+  var projectListTemplate = Handlebars.compile(Utils.templates('home'));
   projectDB.find({}).sort({ name: 1 }).exec(function(err, docs) {
-    // console.log(docs, projectListTemplate(docs));
-    $('.project-list').html(projectListTemplate({ projects : docs}))
+    $('#app-wrapper').html(projectListTemplate({ projects : docs}))
+
+      /*on add project*/
+      $('#add-project').on('click', function() {
+        var project = {};
+        project.created_date = new Date
+          project.name = $('#project-name').val();
+        projectDB.insert(project, function()  {
+          populateProjectList();
+        });
+      });
+
+    $('.project-list-item').on('click', function()  {
+      window.views = 'timer';
+      renderProjectTimer($(this).data('project-id'), $(this).data('project-name'));
+
+      $('.timer-start').on('click', function()  {
+        window.timer = setInterval(tick, 1000);
+      });
+
+      $('.timer-pause').on('click', function()  {
+        clearInterval(window.timer);
+      });
+
+      $('.timer-stop').on('click', function() {
+        clearInterval(window.timer);
+        window.counter = 0;
+      });
+    });
   });
 }
+
+
+function renderProjectTimer(id, name)  {
+  var projectListTemplate = Handlebars.compile(Utils.templates('timer'));
+  $('#app-wrapper').html(projectListTemplate());
+
+
+}
+
+function tick() {
+  var time = Moment().hour(0).minute(0).second(window.counter++).format('HH : mm : ss');
+  $('.timer').html(time);
+}
+
   </script>
 </body>
 </html>
