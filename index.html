@@ -19,8 +19,13 @@
     var Utils = require('./utils.js');
 
     var projectDB = new Datastore({ filename: __dirname + '/db/project.db', autoload: true});
+    var timesliceDB = new Datastore({ filename: __dirname + '/db/timeslice.db', autoload: true});
+
     window.views = 'home';
-    window.counter = 0;
+    // window.counter = 0;
+    // window.counter = 5183940;
+    window.counter = 5183820;
+
     window.timer = null;
 
     /*on page ready*/
@@ -45,7 +50,11 @@ function populateProjectList()  {
 
     $('.project-list-item').on('click', function()  {
       window.views = 'timer';
-      renderProjectTimer($(this).data('project-id'), $(this).data('project-name'));
+      window.project = {
+        id: $(this).data('project-id'),
+        name: $(this).data('project-name')
+      }
+      renderProjectTimer(window.project.id, window.project.name);
 
       $('.timer-start').on('click', function()  {
         window.timer = setInterval(tick, 1000);
@@ -57,7 +66,21 @@ function populateProjectList()  {
 
       $('.timer-stop').on('click', function() {
         clearInterval(window.timer);
-        window.counter = 0;
+        var stoppedAtTime = Moment().hour(0).minute(0).seconds(window.counter++);
+
+        var timeslice = {
+          project_id: window.project.id,
+          project_name: window.project.name,
+          counter: window.counter,
+          formated: stoppedAtTime.format('HH : mm : ss'),
+          hour: stoppedAtTime.format('HH'),
+          minute: stoppedAtTime.format('mm'),
+          second: stoppedAtTime.format('ss')
+        };
+
+        timesliceDB.insert(timeslice, function()  {
+          window.counter = 0;
+        });
       });
     });
   });
@@ -67,8 +90,6 @@ function populateProjectList()  {
 function renderProjectTimer(id, name)  {
   var projectListTemplate = Handlebars.compile(Utils.templates('timer'));
   $('#app-wrapper').html(projectListTemplate());
-
-
 }
 
 function tick() {
