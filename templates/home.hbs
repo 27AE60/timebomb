@@ -1,0 +1,7 @@
+<input id="project-name" type="text" name="project" placeholder="project name"/>
+<input id="add-project" type="button" name="add-project" value="Add New Project"/>
+<ol class="project-list">
+  {{#each projects}}
+  <li data-project-id="{{_id}}" data-project-name={{name}} class="project-list-item">{{name}}</li>
+  {{/each}}
+</ol>
