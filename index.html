@@ -56,6 +56,18 @@ function populateProjectList()  {
       }
       renderProjectTimer(window.project.id, window.project.name);
 
+    });
+  });
+}
+
+
+function renderProjectTimer(id, name)  {
+  var projectListTemplate = Handlebars.compile(Utils.templates('timer'));
+  timesliceDB.find({}).exec(function(err, docs)  {
+    $('#app-wrapper').html(projectListTemplate({
+      timeslices: docs
+    }));
+
       $('.timer-start').on('click', function()  {
         window.timer = setInterval(tick, 1000);
       });
@@ -82,14 +94,8 @@ function populateProjectList()  {
           window.counter = 0;
         });
       });
-    });
+
   });
-}
-
-
-function renderProjectTimer(id, name)  {
-  var projectListTemplate = Handlebars.compile(Utils.templates('timer'));
-  $('#app-wrapper').html(projectListTemplate());
 }
 
 function tick() {

@@ -3,4 +3,10 @@
   <input type="button" class="timer-start" name="start" value="start"/>
   <input type="button" class="timer-pause" name="pause" value="pause"/>
   <input type="button" class="timer-stop" name="stop" value="stop"/>
+
+  <ol class="timer-log">
+    {{#each timeslices}}
+    <li>{{hour}} : {{minute}} : {{second}}</li>
+    {{/each}}
+  </ol>
 </div>
