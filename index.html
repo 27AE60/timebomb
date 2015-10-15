@@ -1,0 +1,50 @@
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>TimeBomb</title>
+</head>
+<body>
+  <div id="">
+    <input id="project-name" type="text" name="project" placeholder="project name"/>
+    <input id="add-project" type="button" name="add-project" value="Add New Project"/>
+    <ol class="project-list">
+    </ol>
+  </div>
+
+  <script id="tpl-project-list" type="text/x-handlebars-template">
+    {{#each projects}}
+    <li>{{name}}</li>
+    {{/each}}
+  </script>
+
+  <script type="text/javascript" charset="utf-8">
+    window.$ = window.jQuery = require('jquery');
+    var Uuid = require('node-uuid');
+    var Datastore = require('nedb');
+    var Handlebars = require('handlebars');
+
+    var projectDB = new Datastore({ filename: __dirname + '/db/project.db', autoload: true});
+
+    $('#add-project').on('click', function() {
+      var project = {};
+      project.created_date = new Date
+      project.name = $('#project-name').val();
+      projectDB.insert(project, function()  {
+        populateProjectList();
+      });
+    });
+
+$(document).ready(function()  {
+  populateProjectList();
+});
+
+function populateProjectList()  {
+  var projectListTemplate = Handlebars.compile($('#tpl-project-list').html());
+  projectDB.find({}).sort({ name: 1 }).exec(function(err, docs) {
+    // console.log(docs, projectListTemplate(docs));
+    $('.project-list').html(projectListTemplate({ projects : docs}))
+  });
+}
+  </script>
+</body>
+</html>
