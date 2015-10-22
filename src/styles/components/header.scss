@@ -1,0 +1,15 @@
+@import 'samagri/pallete';
+@import 'samagri/typography';
+
+.Header {
+  width: 100%;
+  height: 73px;
+  padding: 22px 50px;
+  box-sizing: border-box;
+  @include color('vicious', 'bg');
+
+  &__Title  {
+    @include font('lato', 'light', em(24));
+    @include color('pure-white');
+  }
+}

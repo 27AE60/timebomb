@@ -1,0 +1,25 @@
+/* Color Pallete */
+$pallete : (
+  'pure-black': #000000,
+  'pure-white': #FFFFFF,
+  'vicious': #27AE60,
+  'igray': #808080,
+  'grayline': #EEEEEE,
+  'graylinethick': #DDDDDD
+);
+
+/* Pallete helper methods.*/
+@mixin color($color, $type : 'color', $imp: false, $opacity : 1)  {
+  $color : map-get($pallete, $color);
+
+  @if $opacity != 1 { $color : rgba($color, $opacity);}
+  @if $imp == true { $color: $color !important; }
+
+  @if $type == 'bg' {
+    background-color: $color;
+  } @else if $type == 'border'  {
+    border-color: $color;
+  } @else {
+    color : $color;
+  }
+}
