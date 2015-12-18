@@ -14,6 +14,7 @@ gulp.task("build", callback => {
             "scripts",
             "styles",
             "font",
+            "images",
             "copy"
         ],
         callback
