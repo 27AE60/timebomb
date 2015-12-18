@@ -1,14 +1,22 @@
 /* Fonts Register */
 $fonts : (
-  'lato': 'Lato'
+  'source': 'Source Sans Pro',
+  'georgia': 'Georgia'
 );
 
 $typesets : (
-  'lato': (
+  'georgia': (
+    'regular': 400,
+    'bold': 700
+  ),
+
+  'source': (
+    'extra-light': 200,
     'light': 300,
     'regular': 400,
+    'semi-bold': 600,
     'bold': 700,
-    'black': 800
+    'black': 900
   )
 );
 
