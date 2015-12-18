@@ -1,0 +1,100 @@
+@import 'samagri/pallete';
+@import 'samagri/typography';
+
+.Timeline {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  margin: 10px;
+}
+
+.Timeline__Slice, .Slice {
+  width: 100%;
+  position: relative;
+  border-left: 1px solid #eee;
+  padding: 0px 20px;
+}
+
+.Slice__Wrapper {
+  width: 100%;
+  height: auto;
+  margin: 20px 0;
+}
+
+.Slice__Date  {
+  @include font('source', 'regular', em(18));
+}
+
+.Slice__Day {
+  @include font('source', 'semi-bold', em(18));
+  @include color('igray');
+  margin-left: 10px;
+}
+
+.Slice__Effort  {
+  @include font('source', 'bold', em(18));
+}
+
+
+// .Timeline {
+//   width: 100%;
+//   height: auto;
+//   overflow: hidden;
+//   padding-left: 155px;
+// }
+//
+// .TimeSlice  {
+//   width: 100%;
+//   position: relative;
+//   border-left: 1px solid #eee;
+//
+//   &__Wrapper  {
+//     &--dated  {
+//       position: absolute;
+//       top: 0;
+//       left: -155px;
+//       width: 120px;
+//       text-align: right;
+//     }
+//     &--effort {
+//       width: 100%;
+//       padding-left: 35px;
+//       padding-bottom: 35px;
+//     }
+//     &--task {
+//     }
+//   }
+//
+//   &__Date {
+//     @include font('source', 'regular', em(15));
+//   }
+//
+//   &__Day  {
+//     @include font('source', 'semi-bold', em(15));
+//     @include color('igray');
+//   }
+//
+//   &__Effort {
+//     @include font('source', 'regular', em(22));
+//   }
+//
+//   &__Task {
+//     @include font('source', 'regular', em(15));
+//     padding-left: 35px;
+//     margin-bottom: 20px;
+//
+//     &--done {
+//
+//     }
+//   }
+//
+//   &__Pin  {
+//     width: 12px;
+//     height: 12px;
+//     border-radius: 12px;
+//     @include color('vicious', 'bg');
+//     position: absolute;
+//     top: 0;
+//     left: -6px;
+//   }
+// }

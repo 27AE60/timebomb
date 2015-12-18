@@ -1,0 +1,106 @@
+@import 'samagri/pallete';
+@import 'samagri/typography';
+
+.Projects {
+  width: 100%;
+
+ &__List-Item  {
+    list-style: none;
+  }
+}
+
+.Project  {
+  padding: 22px 50px;
+  box-sizing: border-box;
+  border: 0;
+  border-bottom: 1px solid;
+  @include color('dry-hemp', 'border');
+  @include color('pure-white', 'bg');
+  transition: all 600ms ease;
+
+  &:last-child  {
+    border: 0;
+  }
+
+  &:hover {
+    @include color('hemp', 'bg');
+  }
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: no-wrap;
+  justify-content: flex-start;
+  align-item: strech;
+  align-content: flex-start;
+
+  &__Wrapper  {
+    padding: 2% 2% 2% 2%;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child  {
+      padding-right: 0;
+    }
+
+    &--name  {
+      flex-grow: 2;
+      flex-basis: 20%;
+    }
+
+    &--time-spend {
+      flex-grow: 1;
+      flex-basis: 10%;
+    }
+
+    &--focus  {
+      flex-grow: 2;
+      flex-basis: 30%;
+    }
+
+    &--button {
+      flex-grow: 0;
+      flex-basis: 20%;
+    }
+  }
+
+  &__Label  {
+    margin: 3px 0;
+  }
+
+  &__Name {
+    @include color('graphite');
+    @include font('source', 'semi-bold', em(20), 1.6);
+    text-transform: capitalize;
+    border-bottom: 2px solid;
+    @include color('vicious', 'border');
+    display: inline;
+  }
+
+  &__Time-Spend, &__Focus {
+    @include font('georgia', 'regular', em(16), 1.5);
+    @include color('dirty-black');
+  }
+
+  &__Time-Spend--param  {
+    @include font('georgia', 'regular', em(12));
+    @include color('igray');
+    font-style: italic;
+    margin: 0 10px 0 5px;
+  }
+
+  &__Manage {
+    float: right;
+    margin-top: 14px;
+  }
+}
+
+.dot  {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  background-color: #27ae60;
+  border-radius: 10px;
+  margin-right: 10px;
+}
