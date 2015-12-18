@@ -13,7 +13,7 @@ app.on("window-all-closed", () => {
 });
 
 app.on("ready", () => {
-    mainWindow = new BrowserWindow({width: 800, height: 600});
+    mainWindow = new BrowserWindow({width: 900, height: 650, "min-width": 900});
     mainWindow.loadUrl(`file://${__dirname}/index.html`);
 
     if (process.env.NODE_ENV !== "production") {
