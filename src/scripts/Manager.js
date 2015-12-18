@@ -2,9 +2,10 @@
 
 import {EventEmitter} from "events";
 import React from "react";
-import Projects from "./Projects";
-import Header from "./Header";
 import DataStore from "./DataStore";
+import Header from "./Header";
+import Projects from "./Projects";
+import ProjectDashboard from "./ProjectDashboard";
 
 export default class Manager extends React.Component {
   constructor() {
@@ -18,11 +19,14 @@ export default class Manager extends React.Component {
 
   state = {
     view: 'home',
+    projectSelected: '',
     projects: []
   };
 
-  ManageView()  {
-    this.setState({ view : 'project' });
+  ManageView(id, name)  {
+    this.setState({ view : 'project', projectSelected: name }, () => {
+      console.log('Manage View', this.state);
+    });
   };
 
   componentDidMount = () => {
@@ -31,7 +35,9 @@ export default class Manager extends React.Component {
 
   getProjects = () => {
     DataStore.getProjects((err, docs) => {
-      this.setState({ projects: docs });
+      this.setState({ projects: docs }, function()  {
+        console.log('Get Projects', this.state);
+      });
     });
   };
 
@@ -45,12 +51,39 @@ export default class Manager extends React.Component {
     })
   };
 
+  renderView = () => {
+    var view = false;
+
+    switch(this.state.view) {
+      case 'home':
+        view = this._projectListPartial();
+      break;
+      case 'project':
+        view = this._projectDashboardPartial();
+      break;
+      default:
+        view = this._projectListPartial();
+    }
+
+    return view;
+  };
+
+  _projectListPartial = () => {
+    return <Projects projects={this.state.projects} onProjectSelect={this.ManageView}/>;
+  };
+
+  _projectDashboardPartial = () => {
+    return <ProjectDashboard/>;
+  };
+
   render()  {
     return (
-      <div>
+      <section className="App">
         <Header/>
-        <Projects projects={this.state.projects} onProjectSelect={this.ManageView}/>
-      </div>
+        <main className="Wrapper">
+          {this.renderView()}
+        </main>
+      </section>
     );
   }
 }

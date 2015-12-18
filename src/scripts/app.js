@@ -7,5 +7,5 @@ import Manager from "./Manager.js";
 
 ReactDOM.render(
     React.createElement(Manager),
-    document.getElementById("app-wrapper")
+    document.getElementById('app-wrapper')
 );
